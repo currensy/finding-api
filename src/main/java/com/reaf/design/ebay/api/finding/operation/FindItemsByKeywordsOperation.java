@@ -15,6 +15,7 @@ public class FindItemsByKeywordsOperation implements FindingApiOperation {
     @ApiCallParam(FindingApiParam.OPERATION_NAME)
     private OperationNameParameterImpl operationName;
 
+
     @ApiCallParam(FindingApiParam.KEYWORDS)
     private KeywordsParameterImpl keywords;
 
@@ -23,9 +24,7 @@ public class FindItemsByKeywordsOperation implements FindingApiOperation {
         OperationNameParameterImpl operationNameParameter = new OperationNameParameterImpl();
         operationNameParameter.setParamValue(EbayFindingApiOperationName.findItemsByKeywords);
         setOperationName(operationNameParameter);
-        KeywordsParameterImpl keywordsParameter = new KeywordsParameterImpl();
-        keywordsParameter.setParamValue(keywords);
-        setKeywords(keywordsParameter);
+        setOperationInputValue(keywords);
     }
 
     private void setOperationName(OperationNameParameterImpl operationName){
@@ -34,6 +33,13 @@ public class FindItemsByKeywordsOperation implements FindingApiOperation {
 
     private void setKeywords(KeywordsParameterImpl keywords){
         this.keywords=keywords;
+    }
+
+    @Override
+    public void setOperationInputValue(Object operationInputValue){
+        KeywordsParameterImpl keywordsParameter = new KeywordsParameterImpl();
+        keywordsParameter.setParamValue((String)operationInputValue);
+        setKeywords(keywordsParameter);
     }
 
     @Override

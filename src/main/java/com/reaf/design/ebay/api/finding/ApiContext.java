@@ -6,9 +6,7 @@ import com.reaf.design.ebay.api.finding.enums.EbayGlobalId;
 import com.reaf.design.ebay.api.finding.enums.FindingApiParam;
 import com.reaf.design.ebay.api.finding.enums.FindingApiResponseType;
 import com.reaf.design.ebay.api.finding.operation.FindingApiOperation;
-import com.reaf.design.ebay.api.finding.parameters.OperationNameParameterImpl;
-import com.reaf.design.ebay.api.finding.parameters.Parameter;
-import com.reaf.design.ebay.api.finding.parameters.ResponseTypeParameterImpl;
+import com.reaf.design.ebay.api.finding.parameters.*;
 
 /**
  * Created by iabramov on 11/09/2015.
@@ -23,8 +21,10 @@ public class ApiContext {
 
     @ApiCallParam(FindingApiParam.RESPONSE_DATA_FORMAT)
     private ResponseTypeParameterImpl responseType;
-    //private EbayGlobalId globalId;
-    //private int entriesPerPage;
+    @ApiCallParam(FindingApiParam.GLOBAL_ID)
+    private EbayGlobalIdParameterImpl globalId;
+    @ApiCallParam(FindingApiParam.ENTRIES_PER_PAGE)
+    private EntriesPerPageParameterImpl entriesPerPage;
 
 
     public ApiAccount getApiAccount() {
@@ -56,6 +56,18 @@ public class ApiContext {
         ResponseTypeParameterImpl responseTypeParameter = new ResponseTypeParameterImpl();
         responseTypeParameter.setParamValue(responseType);
         this.responseType = responseTypeParameter;
+    }
+
+    public void setGlobalId(EbayGlobalId globalId){
+        EbayGlobalIdParameterImpl ebayGlobalIdParameter = new EbayGlobalIdParameterImpl();
+        ebayGlobalIdParameter.setParamValue(globalId);
+        this.globalId=ebayGlobalIdParameter;
+    }
+
+    public void setEntriesPerPage(String entriesPerPage){
+        EntriesPerPageParameterImpl entriesPerPageParameter = new EntriesPerPageParameterImpl();
+        entriesPerPageParameter.setParamValue(entriesPerPage);
+        this.entriesPerPage=entriesPerPageParameter;
     }
 
 

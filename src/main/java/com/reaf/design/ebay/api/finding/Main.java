@@ -1,5 +1,6 @@
 package com.reaf.design.ebay.api.finding;
 
+import com.reaf.design.ebay.api.finding.enums.EbayGlobalId;
 import com.reaf.design.ebay.api.finding.enums.FindingApiResponseType;
 import com.reaf.design.ebay.api.finding.operation.FindItemsByKeywordsOperation;
 
@@ -22,7 +23,12 @@ public class Main {
         FindItemsByKeywordsOperation findItemsByKeywordsOperation = new FindItemsByKeywordsOperation("iphone 6s");
         apiContext.setOperation(findItemsByKeywordsOperation);
         apiContext.setResponseType(FindingApiResponseType.JSON);
+        apiContext.setGlobalId(EbayGlobalId.UK);
+        apiContext.setEntriesPerPage("10");
         FindingApiNg findingApiNg = new FindingApiNg(apiContext);
+        findingApiNg.build();
+        findItemsByKeywordsOperation.setOperationInputValue("ralph lauren polo shirt");
+        apiContext.setOperation(findItemsByKeywordsOperation);
         findingApiNg.build();
         FindItemsByProductOperation findItemsByProductOperation = new FindItemsByProductOperation("85968596895869");
         apiContext.setOperation(findItemsByProductOperation);

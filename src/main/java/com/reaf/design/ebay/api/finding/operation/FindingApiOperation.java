@@ -10,6 +10,8 @@ import org.apache.http.message.BasicNameValuePair;
 public interface FindingApiOperation {
 
 
+    void setOperationInputValue(Object operationInputValue);
+
     String getOperationName();
 
     String getOperationInputValue();

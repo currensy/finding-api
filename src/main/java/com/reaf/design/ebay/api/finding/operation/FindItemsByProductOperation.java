@@ -21,9 +21,7 @@ public class FindItemsByProductOperation implements FindingApiOperation {
         OperationNameParameterImpl operationNameParameter = new OperationNameParameterImpl();
         operationNameParameter.setParamValue(EbayFindingApiOperationName.findItemsByProduct);
         setOperationName(operationNameParameter);
-        ProductIdParameterImpl ProductIdParameter = new ProductIdParameterImpl();
-        ProductIdParameter.setParamValue(productId);
-        setProductId(ProductIdParameter);
+        setOperationInputValue(productId);
     }
 
     private void setOperationName(OperationNameParameterImpl operationName){
@@ -32,6 +30,14 @@ public class FindItemsByProductOperation implements FindingApiOperation {
 
     private void setProductId(ProductIdParameterImpl productId){
         this.productId=productId;
+    }
+
+    @Override
+    public void setOperationInputValue(Object operationInputValue) {
+        ProductIdParameterImpl ProductIdParameter = new ProductIdParameterImpl();
+        ProductIdParameter.setParamValue((String)operationInputValue);
+        setProductId(ProductIdParameter);
+
     }
 
     @Override

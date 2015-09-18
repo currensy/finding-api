@@ -7,6 +7,7 @@ public enum FindingApiParam {
     RESPONSE_DATA_FORMAT("RESPONSE-DATA-FORMAT"),OPERATION_NAME("OPERATION-NAME"),
     SECURITY_APPNAME("SECURITY-APPNAME"),GLOBAL_ID("GLOBAL-ID"),KEYWORDS("keywords"),
     PRODUCT_ID("productId"),TRACKING_ID("affiliate.trackingId"),NETWORK_ID("affiliate.networkId"),
+    ENTRIES_PER_PAGE("paginationInput.entriesPerPage"),
     SERVICE_VERSION("SERVICE-VERSION");
 
     private String paramName;

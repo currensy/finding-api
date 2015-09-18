@@ -2,6 +2,7 @@ package com.reaf.design.ebay.api.finding;
 
 import com.reaf.design.ebay.api.finding.enums.EbayGlobalId;
 import com.reaf.design.ebay.api.finding.enums.FindingApiResponseType;
+import com.reaf.design.ebay.api.finding.operation.FindItemsByCategory;
 import com.reaf.design.ebay.api.finding.operation.FindItemsByKeywordsOperation;
 
 import com.reaf.design.ebay.api.finding.operation.FindItemsByProductOperation;
@@ -32,6 +33,10 @@ public class Main {
         findingApiNg.build();
         FindItemsByProductOperation findItemsByProductOperation = new FindItemsByProductOperation("85968596895869");
         apiContext.setOperation(findItemsByProductOperation);
+        findingApiNg.setApiContext(apiContext);
+        findingApiNg.build();
+        FindItemsByCategory findItemsByCategory = new FindItemsByCategory("3755");
+        apiContext.setOperation(findItemsByCategory);
         findingApiNg.setApiContext(apiContext);
         findingApiNg.build();
 

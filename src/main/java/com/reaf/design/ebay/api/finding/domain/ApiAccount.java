@@ -1,4 +1,4 @@
-package com.reaf.design.ebay.api.finding;
+package com.reaf.design.ebay.api.finding.domain;
 
 
 import com.reaf.design.ebay.api.finding.annotation.ApiCallParam;

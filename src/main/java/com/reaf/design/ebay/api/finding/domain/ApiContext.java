@@ -1,4 +1,4 @@
-package com.reaf.design.ebay.api.finding;
+package com.reaf.design.ebay.api.finding.domain;
 
 import com.reaf.design.ebay.api.finding.annotation.ApiCallParam;
 
@@ -7,10 +7,13 @@ import com.reaf.design.ebay.api.finding.enums.FindingApiParam;
 import com.reaf.design.ebay.api.finding.enums.FindingApiResponseType;
 import com.reaf.design.ebay.api.finding.operation.FindingApiOperation;
 import com.reaf.design.ebay.api.finding.parameters.*;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by iabramov on 11/09/2015.
  */
+
+@Component
 public class ApiContext {
 
     private ApiAccount apiAccount;

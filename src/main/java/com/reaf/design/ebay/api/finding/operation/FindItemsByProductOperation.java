@@ -5,10 +5,12 @@ import com.reaf.design.ebay.api.finding.enums.EbayFindingApiOperationName;
 import com.reaf.design.ebay.api.finding.enums.FindingApiParam;
 import com.reaf.design.ebay.api.finding.parameters.OperationNameParameterImpl;
 import com.reaf.design.ebay.api.finding.parameters.ProductIdParameterImpl;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by iabramov on 17/09/2015.
  */
+
 public class FindItemsByProductOperation implements FindingApiOperation {
 
     @ApiCallParam(FindingApiParam.OPERATION_NAME)

@@ -1,15 +1,14 @@
 package com.reaf.design.ebay.api.finding;
 
 
+import com.reaf.design.ebay.api.finding.domain.ApiContext;
 import com.reaf.design.ebay.api.finding.enums.EbayGlobalId;
-import com.reaf.design.ebay.api.finding.enums.FindingApiParam;
 import com.reaf.design.ebay.api.finding.enums.FindingApiResponseType;
 import com.reaf.design.ebay.api.finding.operation.FindingApiOperation;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +18,7 @@ import java.util.stream.Collectors;
 /**
  * Created by iabramov on 11/09/2015.
  */
+
 public class FindingApi {
 
     public static final String PRODUCTION_ENDPOINT = "http://svcs.ebay.com/services/search/FindingService/v1";

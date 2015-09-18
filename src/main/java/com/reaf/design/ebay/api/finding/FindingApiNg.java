@@ -1,26 +1,33 @@
 package com.reaf.design.ebay.api.finding;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.reaf.design.ebay.api.finding.annotation.ApiCallParam;
+import com.reaf.design.ebay.api.finding.domain.ApiAccount;
+import com.reaf.design.ebay.api.finding.domain.ApiContext;
+import com.reaf.design.ebay.api.finding.domain.FindingApiResponse;
+import com.reaf.design.ebay.api.finding.domain.PartnerAccount;
 import com.reaf.design.ebay.api.finding.enums.FindingApiParam;
-import com.reaf.design.ebay.api.finding.enums.FindingApiResponseType;
+import com.reaf.design.ebay.api.finding.executer.RequestExecuter;
 import com.reaf.design.ebay.api.finding.operation.FindingApiOperation;
-import com.reaf.design.ebay.api.finding.parameters.OperationNameParameterImpl;
 import com.reaf.design.ebay.api.finding.parameters.Parameter;
-import com.reaf.design.ebay.api.finding.parameters.ResponseTypeParameterImpl;
+import com.reaf.design.ebay.api.finding.parser.FindingApiParserImpl;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
  * Created by iabramov on 17/09/2015.
  */
+
+@Component
 public class FindingApiNg {
 
     private ApiContext apiContext;
@@ -31,6 +38,12 @@ public class FindingApiNg {
 
     private Map<String, String> paramsMap = new HashMap<>();
 
+    @Autowired
+    RequestExecuter requestExecuter;
+
+
+    public FindingApiNg() {
+    }
 
     public ApiContext getApiContext() {
         return apiContext;
@@ -45,18 +58,29 @@ public class FindingApiNg {
 
     }
 
-    public void build() {
+    private String buildStringUrl() throws IllegalAccessException {
         flushMap();
-        try {
-            initParamMap();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
+        initParamMap();
         List<NameValuePair> qparams = new ArrayList();
         qparams.addAll(paramsMap.entrySet().stream().map(param -> new BasicNameValuePair(param.getKey(), param.getValue())).collect(Collectors.toList()));
-        System.out.println(FindingApiNg.PRODUCTION_ENDPOINT + "?" + URLEncodedUtils.format(qparams, "UTF-8"));
+        String stringUrl = FindingApiNg.PRODUCTION_ENDPOINT + "?" + URLEncodedUtils.format(qparams, "UTF-8");
+        System.out.println(stringUrl);
+        return stringUrl;
+    }
 
+    public FindingApiResponse execOperation() throws IllegalAccessException {
+        String stringUrl = buildStringUrl();
+        JsonNode findingApiResponseNode = (JsonNode) requestExecuter.exec(stringUrl, JsonNode.class);
+        JsonNode responseByOperationNode = findingApiResponseNode.get(apiContext.getOperation().getOperationName()+"Response");
+        FindingApiParserImpl findingApiParser = new FindingApiParserImpl();
+        try {
+            findingApiParser.parse(responseByOperationNode);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private void initParamMap() throws IllegalAccessException {

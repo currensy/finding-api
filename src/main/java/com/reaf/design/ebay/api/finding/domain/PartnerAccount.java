@@ -1,13 +1,15 @@
-package com.reaf.design.ebay.api.finding;
+package com.reaf.design.ebay.api.finding.domain;
 
 import com.reaf.design.ebay.api.finding.annotation.ApiCallParam;
 import com.reaf.design.ebay.api.finding.enums.FindingApiParam;
 import com.reaf.design.ebay.api.finding.parameters.CampaignIdParameterImpl;
 import com.reaf.design.ebay.api.finding.parameters.NetworkIdParameterImpl;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by iabramov on 17/09/2015.
  */
+
 public class PartnerAccount {
 
 
@@ -18,12 +20,13 @@ public class PartnerAccount {
 
 
 
+
     public PartnerAccount(String campaignId, String networkId){
         setCampaignId(campaignId);
         setNetworkId(networkId);
     }
 
-    public CampaignIdParameterImpl campaignId() {
+    public CampaignIdParameterImpl getCampaignId() {
         return campaignIdParameter;
     }
 

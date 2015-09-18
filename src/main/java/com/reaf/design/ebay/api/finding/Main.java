@@ -1,11 +1,16 @@
 package com.reaf.design.ebay.api.finding;
 
+import com.reaf.design.ebay.api.finding.domain.ApiAccount;
+import com.reaf.design.ebay.api.finding.domain.ApiContext;
+import com.reaf.design.ebay.api.finding.domain.PartnerAccount;
 import com.reaf.design.ebay.api.finding.enums.EbayGlobalId;
 import com.reaf.design.ebay.api.finding.enums.FindingApiResponseType;
+import com.reaf.design.ebay.api.finding.executer.FindingApiRequestExecuterImpl;
 import com.reaf.design.ebay.api.finding.operation.FindItemsByCategory;
 import com.reaf.design.ebay.api.finding.operation.FindItemsByKeywordsOperation;
 
 import com.reaf.design.ebay.api.finding.operation.FindItemsByProductOperation;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * Created by iabramov on 11/09/2015.
@@ -14,6 +19,9 @@ public class Main {
 
 
     public static void main(String[] args) {
+
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
+        FindingApiNg findingApiNg = (FindingApiNg) context.getBean("findingApiNg");
 
 
         ApiAccount apiAccount = new ApiAccount("Reafco980-218b-41c2-b3af-93890dc7786");
@@ -26,19 +34,14 @@ public class Main {
         apiContext.setResponseType(FindingApiResponseType.JSON);
         apiContext.setGlobalId(EbayGlobalId.UK);
         apiContext.setEntriesPerPage("10");
-        FindingApiNg findingApiNg = new FindingApiNg(apiContext);
-        findingApiNg.build();
-        findItemsByKeywordsOperation.setOperationInputValue("ralph lauren polo shirt");
-        apiContext.setOperation(findItemsByKeywordsOperation);
-        findingApiNg.build();
-        FindItemsByProductOperation findItemsByProductOperation = new FindItemsByProductOperation("85968596895869");
-        apiContext.setOperation(findItemsByProductOperation);
-        findingApiNg.setApiContext(apiContext);
-        findingApiNg.build();
-        FindItemsByCategory findItemsByCategory = new FindItemsByCategory("3755");
+        FindItemsByCategory findItemsByCategory = new FindItemsByCategory("9355");
         apiContext.setOperation(findItemsByCategory);
         findingApiNg.setApiContext(apiContext);
-        findingApiNg.build();
+        try {
+            findingApiNg.execOperation();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
 
     }
 }

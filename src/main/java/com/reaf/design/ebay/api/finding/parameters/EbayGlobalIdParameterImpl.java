@@ -16,6 +16,6 @@ public class EbayGlobalIdParameterImpl implements Parameter<EbayGlobalId>{
 
     @Override
     public String getParamValue() {
-        return globalId.name();
+        return globalId.getGlobalId();
     }
 }

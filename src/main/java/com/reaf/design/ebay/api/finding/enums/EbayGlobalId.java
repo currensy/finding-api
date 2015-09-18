@@ -13,4 +13,8 @@ public enum EbayGlobalId {
     EbayGlobalId(String globalId) {
         this.globalId=globalId;
     }
+
+    public String getGlobalId(){
+        return globalId;
+    }
 }

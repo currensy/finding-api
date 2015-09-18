@@ -5,6 +5,7 @@ import com.reaf.design.ebay.api.finding.enums.EbayFindingApiOperationName;
 import com.reaf.design.ebay.api.finding.enums.FindingApiParam;
 import com.reaf.design.ebay.api.finding.parameters.KeywordsParameterImpl;
 import com.reaf.design.ebay.api.finding.parameters.OperationNameParameterImpl;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by iabramov on 11/09/2015.

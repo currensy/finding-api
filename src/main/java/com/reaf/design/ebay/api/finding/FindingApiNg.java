@@ -3,10 +3,8 @@ package com.reaf.design.ebay.api.finding;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.reaf.design.ebay.api.finding.annotation.ApiCallParam;
-import com.reaf.design.ebay.api.finding.domain.ApiAccount;
-import com.reaf.design.ebay.api.finding.domain.ApiContext;
-import com.reaf.design.ebay.api.finding.domain.FindingApiResponse;
-import com.reaf.design.ebay.api.finding.domain.PartnerAccount;
+import com.reaf.design.ebay.api.finding.domain.*;
+import com.reaf.design.ebay.api.finding.domain.response.Response;
 import com.reaf.design.ebay.api.finding.enums.FindingApiParam;
 import com.reaf.design.ebay.api.finding.executer.RequestExecuter;
 import com.reaf.design.ebay.api.finding.operation.FindingApiOperation;
@@ -30,11 +28,10 @@ import java.util.stream.Collectors;
 @Component
 public class FindingApiNg {
 
-    private ApiContext apiContext;
-
-
     private static final String PRODUCTION_ENDPOINT = "http://svcs.ebay.com/services/search/FindingService/v1";
     private static final String SERVICE_VERSION = "1.0.0";
+
+    private ApiContext apiContext;
 
     private Map<String, String> paramsMap = new HashMap<>();
 
@@ -68,13 +65,13 @@ public class FindingApiNg {
         return stringUrl;
     }
 
-    public FindingApiResponse execOperation() throws IllegalAccessException {
+    public Response execOperation() throws IllegalAccessException {
         String stringUrl = buildStringUrl();
         JsonNode findingApiResponseNode = (JsonNode) requestExecuter.exec(stringUrl, JsonNode.class);
         JsonNode responseByOperationNode = findingApiResponseNode.get(apiContext.getOperation().getOperationName()+"Response");
         FindingApiParserImpl findingApiParser = new FindingApiParserImpl();
         try {
-            findingApiParser.parse(responseByOperationNode);
+            return findingApiParser.parse(responseByOperationNode);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
@@ -87,7 +84,9 @@ public class FindingApiNg {
 
         paramsMap.put(FindingApiParam.SERVICE_VERSION.getParamName(), FindingApiNg.SERVICE_VERSION);
 
-
+        if (apiContext==null){
+            throw new RuntimeException("Please set ApiContext");
+        }
         Field[] fields = apiContext.getClass().getDeclaredFields();
         for (Field field : fields) {
             field.setAccessible(true);

@@ -22,6 +22,8 @@ public class FindingApiRequestExecuterImpl implements RequestExecuter {
     @Autowired
     ObjectMapper objectMapper;
 
+
+
     @Override
     public Object exec(Object request, Class type) {
         String stringResponse = restTemplate.getForObject((String)request,String.class);

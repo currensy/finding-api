@@ -1,4 +1,4 @@
-package com.reaf.design.ebay.api.finding.domain;
+package com.reaf.design.ebay.api.finding.domain.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -16,6 +16,7 @@ public class FindingApiResponse {
     private List<String> version;
     private List<String> timestamp;
     private List<JsonNode> searchResult;
+    private List<JsonNode> paginationOutput;
 
     public List<String> getAck() {
         return ack;
@@ -47,5 +48,13 @@ public class FindingApiResponse {
 
     public void setSearchResult(List<JsonNode> searchResult) {
         this.searchResult = searchResult;
+    }
+
+    public List<JsonNode> getPaginationOutput() {
+        return paginationOutput;
+    }
+
+    public void setPaginationOutput(List<JsonNode> paginationOutput) {
+        this.paginationOutput = paginationOutput;
     }
 }

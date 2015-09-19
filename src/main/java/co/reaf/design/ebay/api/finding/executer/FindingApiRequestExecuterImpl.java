@@ -14,11 +14,9 @@ import java.io.IOException;
 @Component
 public class FindingApiRequestExecuterImpl implements RequestExecuter {
 
-    @Autowired
-    RestTemplate restTemplate;
+    RestTemplate restTemplate = new RestTemplate();
 
-    @Autowired
-    ObjectMapper objectMapper;
+    ObjectMapper objectMapper = new ObjectMapper();
 
 
 

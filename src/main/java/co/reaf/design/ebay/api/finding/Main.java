@@ -20,7 +20,7 @@ public class Main {
     public static void main(String[] args) {
 
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
-        FindingApiNg findingApiNg = (FindingApiNg) context.getBean("findingApiNg");
+        FindingApi findingApi = (FindingApi) context.getBean("findingApi");
 
 
         ApiAccount apiAccount = new ApiAccount("Reafco980-218b-41c2-b3af-93890dc7786");
@@ -33,18 +33,18 @@ public class Main {
         apiContext.setResponseType(FindingApiResponseType.JSON);
         apiContext.setGlobalId(EbayGlobalId.UK);
         apiContext.setEntriesPerPage("10");
-        findingApiNg.setApiContext(apiContext);
+        findingApi.setApiContext(apiContext);
         try {
-            Response response = findingApiNg.execOperation();
+            Response response = findingApi.execOperation();
             System.out.println(response);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
         FindItemsByCategory findItemsByCategory = new FindItemsByCategory("9355");
         apiContext.setOperation(findItemsByCategory);
-        findingApiNg.setApiContext(apiContext);
+        findingApi.setApiContext(apiContext);
         try {
-            Response response = findingApiNg.execOperation();
+            Response response = findingApi.execOperation();
             System.out.println(response);
         } catch (IllegalAccessException e) {
             e.printStackTrace();

@@ -25,15 +25,20 @@ public class Main {
 
         ApiAccount apiAccount = new ApiAccount("Reafco980-218b-41c2-b3af-93890dc7786");
         PartnerAccount partnerAccount = new PartnerAccount("5337737097", "9");
-        ApiContext apiContext = new ApiContext();
-        apiContext.setApiAccount(apiAccount);
-        apiContext.setPartnerAccount(partnerAccount);
         FindItemsByKeywordsOperation findItemsByKeywordsOperation = new FindItemsByKeywordsOperation("iphone 6s");
-        apiContext.setOperation(findItemsByKeywordsOperation);
-        apiContext.setResponseType(FindingApiResponseType.JSON);
-        apiContext.setGlobalId(EbayGlobalId.UK);
-        apiContext.setEntriesPerPage("10");
+        ApiContext apiContext = new ApiContext.Builder(apiAccount)
+                .operation(findItemsByKeywordsOperation)
+                .globalId(EbayGlobalId.UK)
+                .partnerAccount(partnerAccount)
+                .responseType(FindingApiResponseType.JSON)
+                .entriesPerPage("10")
+                .build();
+
+        
+
         findingApi.setApiContext(apiContext);
+
+
         try {
             Response response = findingApi.execOperation();
             System.out.println(response);

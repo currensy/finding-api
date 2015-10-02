@@ -31,8 +31,20 @@ public class ApiContext {
     @ApiCallParam(FindingApiParam.ENTRIES_PER_PAGE)
     private EntriesPerPageParameterImpl entriesPerPage;
 
+    public ApiContext() {
+    }
 
-    public ApiAccount getApiAccount() {
+    private ApiContext(Builder builder) {
+        apiAccount=builder.apiAccount;
+        partnerAccount=builder.partnerAccount;
+        operation=builder.operation;
+        responseType=builder.responseType;
+        globalId=builder.globalId;
+        entriesPerPage=builder.entriesPerPage;
+    }
+
+
+    /*public ApiAccount getApiAccount() {
         return apiAccount;
     }
 
@@ -73,6 +85,58 @@ public class ApiContext {
         EntriesPerPageParameterImpl entriesPerPageParameter = new EntriesPerPageParameterImpl();
         entriesPerPageParameter.setParamValue(entriesPerPage);
         this.entriesPerPage=entriesPerPageParameter;
+    }*/
+
+
+    public static class Builder {
+
+        private ApiAccount apiAccount;
+        private PartnerAccount partnerAccount;
+        private FindingApiOperation operation;
+        private ResponseTypeParameterImpl responseType;
+        private EbayGlobalIdParameterImpl globalId;
+        private EntriesPerPageParameterImpl entriesPerPage;
+
+        public Builder(ApiAccount apiAccount){
+            this.apiAccount=apiAccount;
+        }
+
+
+        public Builder partnerAccount(PartnerAccount partnerAccount){
+            this.partnerAccount=partnerAccount;
+            return this;
+        }
+
+        public Builder operation(FindingApiOperation operation){
+            this.operation=operation;
+            return this;
+        }
+
+        public Builder responseType(FindingApiResponseType responseType){
+            ResponseTypeParameterImpl responseTypeParameter = new ResponseTypeParameterImpl();
+            responseTypeParameter.setParamValue(responseType);
+            this.responseType = responseTypeParameter;
+            return this;
+        }
+
+        public Builder globalId(EbayGlobalId globalId){
+            EbayGlobalIdParameterImpl ebayGlobalIdParameter = new EbayGlobalIdParameterImpl();
+            ebayGlobalIdParameter.setParamValue(globalId);
+            this.globalId=ebayGlobalIdParameter;
+            return this;
+        }
+
+        public Builder entriesPerPage(String entriesPerPage){
+            EntriesPerPageParameterImpl entriesPerPageParameter = new EntriesPerPageParameterImpl();
+            entriesPerPageParameter.setParamValue(entriesPerPage);
+            this.entriesPerPage=entriesPerPageParameter;
+            return this;
+        }
+
+
+        public ApiContext build(){
+            return new ApiContext(this);
+        }
     }
 
 

@@ -44,7 +44,7 @@ public class ApiContext {
     }
 
 
-    /*public ApiAccount getApiAccount() {
+    public ApiAccount getApiAccount() {
         return apiAccount;
     }
 
@@ -85,7 +85,7 @@ public class ApiContext {
         EntriesPerPageParameterImpl entriesPerPageParameter = new EntriesPerPageParameterImpl();
         entriesPerPageParameter.setParamValue(entriesPerPage);
         this.entriesPerPage=entriesPerPageParameter;
-    }*/
+    }
 
 
     public static class Builder {

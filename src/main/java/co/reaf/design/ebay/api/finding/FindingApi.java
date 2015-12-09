@@ -5,6 +5,7 @@ import co.reaf.design.ebay.api.finding.domain.ApiAccount;
 import co.reaf.design.ebay.api.finding.domain.ApiContext;
 import co.reaf.design.ebay.api.finding.domain.PartnerAccount;
 import co.reaf.design.ebay.api.finding.domain.response.Response;
+import co.reaf.design.ebay.api.finding.exception.FindingApiException;
 import co.reaf.design.ebay.api.finding.executer.FindingApiRequestExecuterImpl;
 import co.reaf.design.ebay.api.finding.operation.FindingApiOperation;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -68,7 +69,7 @@ public class FindingApi {
         return stringUrl;
     }
 
-    public Response execOperation() throws IllegalAccessException {
+    public Response execOperation() throws IllegalAccessException, FindingApiException {
         String stringUrl = buildStringUrl();
         JsonNode findingApiResponseNode = (JsonNode) requestExecuter.exec(stringUrl, JsonNode.class);
         JsonNode responseByOperationNode = findingApiResponseNode.get(apiContext.getOperation().getOperationName()+"Response");

@@ -4,6 +4,7 @@ import co.reaf.design.ebay.api.finding.domain.item.Item;
 import co.reaf.design.ebay.api.finding.domain.response.FindingApiResponse;
 import co.reaf.design.ebay.api.finding.domain.response.PaginationOutput;
 import co.reaf.design.ebay.api.finding.domain.response.Response;
+import co.reaf.design.ebay.api.finding.exception.FindingApiException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,14 +30,17 @@ public class FindingApiParserImpl implements FindingApiParser {
     private ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
-    public Response parse(JsonNode jsonNode) throws JsonProcessingException, InvocationTargetException, IllegalAccessException {
+    public Response parse(JsonNode jsonNode) throws JsonProcessingException, InvocationTargetException, IllegalAccessException, FindingApiException {
         Response response = new Response();
         List parsedItems = new ArrayList();
         ParsedPaginationOutput parsedPaginationOutput = new ParsedPaginationOutput();
         FindingApiResponse[] findingApiResponse = objectMapper.treeToValue(jsonNode, FindingApiResponse[].class);
         for (int i = 0; i < findingApiResponse.length; i++) {
 
+            if(findingApiResponse[i].getAck().get(0).equalsIgnoreCase("failure")) {
 
+                throw new FindingApiException("Request failed");
+            }
             response = (Response) originalArrayResponseToOwnResponse(findingApiResponse[i], response);
 
             List<JsonNode> searchResult = findingApiResponse[i].getSearchResult();

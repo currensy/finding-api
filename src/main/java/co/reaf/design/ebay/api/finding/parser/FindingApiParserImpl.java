@@ -47,6 +47,7 @@ public class FindingApiParserImpl implements FindingApiParser {
             for (JsonNode node : searchResult) {
                 response.setCount(node.get(FindingApiParserImpl.COUNT).asText());
                 JsonNode items = node.get(FindingApiParserImpl.ITEM);
+                if(items==null) throw new FindingApiException("No Items Found");
                 Item[] item = objectMapper.treeToValue(items, Item[].class);
                 for (int j = 0; j < item.length; j++) {
                     ParsedItem parsedItem = new ParsedItem();

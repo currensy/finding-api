@@ -8,6 +8,21 @@
     <name>finding-api</name>
     <url>http://maven.apache.org</url>
 
+    <distributionManagement>
+        <repository>
+            <id>reaf-nexus</id>
+            <name>reaf nexus</name>
+            <url>http://104.197.41.67:8081/nexus/content/repositories/releases/</url>
+        </repository>
+
+        <snapshotRepository>
+            <id>reaf-nexus</id>
+            <name>reaf nexus</name>
+            <url>http://104.197.41.67:8081/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+
+    </distributionManagement>
+
     <properties>
         <spring.version>4.1.1.RELEASE</spring.version>
         <jackson.version>2.6.1</jackson.version>

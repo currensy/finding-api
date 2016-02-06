@@ -7,6 +7,7 @@ import co.reaf.design.ebay.api.finding.domain.PartnerAccount;
 import co.reaf.design.ebay.api.finding.domain.response.Response;
 import co.reaf.design.ebay.api.finding.exception.FindingApiException;
 import co.reaf.design.ebay.api.finding.executer.FindingApiRequestExecuterImpl;
+import co.reaf.design.ebay.api.finding.filters.ItemFilter;
 import co.reaf.design.ebay.api.finding.operation.FindingApiOperation;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -37,7 +38,7 @@ public class FindingApi {
 
     private ApiContext apiContext;
 
-    private Map<String, String> paramsMap = new HashMap<>();
+    private Map<String, String> paramsMap = new LinkedHashMap<>();
 
 
     RequestExecuter requestExecuter = new FindingApiRequestExecuterImpl();
@@ -64,7 +65,7 @@ public class FindingApi {
         initParamMap();
         List<NameValuePair> qparams = new ArrayList();
         qparams.addAll(paramsMap.entrySet().stream().map(param -> new BasicNameValuePair(param.getKey(), param.getValue())).collect(Collectors.toList()));
-        String stringUrl = FindingApi.PRODUCTION_ENDPOINT + "?" + URLEncodedUtils.format(qparams, "UTF-8");
+        String stringUrl = FindingApi.PRODUCTION_ENDPOINT + "?" + URLEncodedUtils.format(qparams, "UTF-8").replace("%28", "(").replace("%29",")");
         System.out.println(stringUrl);
         return stringUrl;
     }
@@ -115,6 +116,21 @@ public class FindingApi {
                 Field[] findingApiOperationFields = findingApiOperation.getClass().getDeclaredFields();
                 for (Field findingApiOperationField : findingApiOperationFields) {
                     populateMap(findingApiOperationField,apiContext.getOperation());
+                }
+            }
+
+            if(field.get(apiContext) instanceof ItemFilter){
+                ItemFilter itemFilter = (ItemFilter) field.get(apiContext);
+                Map<String,String> filters = itemFilter.getFilters();
+                int index = 0;
+                for (Map.Entry<String, String> filterNameValueSet : filters.entrySet()) {
+                    String name = filterNameValueSet.getKey();
+                    String value = filterNameValueSet.getValue();
+                    String paramName="itemFilter("+index+").name";
+                    paramsMap.put(paramName, name);
+                    String paramValue="itemFilter("+index+").value(0)";
+                    paramsMap.put(paramValue,value);
+                    index++;
                 }
             }
 

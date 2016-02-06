@@ -3,11 +3,12 @@ package co.reaf.design.ebay.api.finding;
 import co.reaf.design.ebay.api.finding.domain.ApiContext;
 import co.reaf.design.ebay.api.finding.domain.PartnerAccount;
 import co.reaf.design.ebay.api.finding.domain.response.Response;
+import co.reaf.design.ebay.api.finding.enums.ItemCondition;
 import co.reaf.design.ebay.api.finding.enums.EbayGlobalId;
 import co.reaf.design.ebay.api.finding.enums.FindingApiResponseType;
 import co.reaf.design.ebay.api.finding.domain.ApiAccount;
+import co.reaf.design.ebay.api.finding.enums.ListingType;
 import co.reaf.design.ebay.api.finding.exception.FindingApiException;
-import co.reaf.design.ebay.api.finding.operation.FindItemsByCategory;
 import co.reaf.design.ebay.api.finding.operation.FindItemsByKeywordsOperation;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -26,7 +27,7 @@ public class Main {
 
         ApiAccount apiAccount = new ApiAccount("Reafco980-218b-41c2-b3af-93890dc7786");
         PartnerAccount partnerAccount = new PartnerAccount("5337779522", "9");
-        FindItemsByKeywordsOperation findItemsByKeywordsOperation = new FindItemsByKeywordsOperation("iphone 6s 32GB");
+        FindItemsByKeywordsOperation findItemsByKeywordsOperation = new FindItemsByKeywordsOperation("iphone 6s 64GB");
         ApiContext apiContext = new ApiContext.Builder(apiAccount)
                 .operation(findItemsByKeywordsOperation)
                 .globalId(EbayGlobalId.US)
@@ -36,7 +37,9 @@ public class Main {
                 .build();
 
         
-
+        apiContext.setCondition(ItemCondition.NEW);
+        apiContext.setListingType(ListingType.FIXED_PRICE);
+        apiContext.setAvailableToLocation("IL");
         findingApi.setApiContext(apiContext);
 
 

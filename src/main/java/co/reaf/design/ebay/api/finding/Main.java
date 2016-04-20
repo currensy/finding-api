@@ -25,8 +25,8 @@ public class Main {
         FindingApi findingApi = (FindingApi) context.getBean("findingApi");
 
 
-        ApiAccount apiAccount = new ApiAccount("Reafco980-218b-41c2-b3af-93890dc7786");
-        PartnerAccount partnerAccount = new PartnerAccount("5337779522", "9");
+        ApiAccount apiAccount = new ApiAccount("XXXXX");
+        PartnerAccount partnerAccount = new PartnerAccount("XXXX", "X");
         FindItemsByKeywordsOperation findItemsByKeywordsOperation = new FindItemsByKeywordsOperation("iphone 6s 64GB");
         ApiContext apiContext = new ApiContext.Builder(apiAccount)
                 .operation(findItemsByKeywordsOperation)
